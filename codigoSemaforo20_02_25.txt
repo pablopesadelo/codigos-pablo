@@ -1,0 +1,71 @@
+/*
+Autor: Pablo Pedroza
+Nome programa: Semaforo
+Descrição: Semaforo funcional
+Data: 19/02/2005
+*/
+
+#define ledVerde 3000
+#define ledAmarelo 2000
+#define ledVermelho 5000
+#define ligar HIGH
+#define desligar LOW
+#define ledVerde1 2
+#define ledAmarelo1 3
+#define ledVermelho1 4
+#define ledVerde2 5
+#define ledAmarelo2 6
+#define ledVermelho2 7
+#define ledPedestre1 8
+#define ledPedestre2 9
+
+
+void setup()
+  //inicio do Arduino.
+{
+  pinMode(ledVerde1,OUTPUT); //pino2
+  pinMode(ledAmarelo1,OUTPUT); //pino3
+  pinMode(ledVermelho1,OUTPUT); //pino4
+  pinMode(ledVerde2,OUTPUT); //pino5
+  pinMode(ledAmarelo2,OUTPUT); //pino6
+  pinMode(ledVermelho2,OUTPUT); //pino7
+  pinMode(ledPedestre2,OUTPUT); //pino8
+  pinMode(ledPedestre1,OUTPUT); //pino9
+}
+
+
+void loop()
+  //função de loop
+{
+  digitalWrite(ledVerde1, ligar); 
+  digitalWrite(ledVermelho2, ligar); 
+  digitalWrite(ledPedestre2, desligar);
+  digitalWrite(ledPedestre1, ligar);
+  
+  delay(ledVerde);
+  
+  digitalWrite(ledVerde1, desligar);
+  digitalWrite(ledAmarelo1, ligar);
+  
+  delay(ledAmarelo);
+  
+  digitalWrite(ledVermelho2, desligar);
+  digitalWrite(ledPedestre2, ligar);
+  digitalWrite(ledVerde2, ligar);
+  digitalWrite(ledVermelho1, ligar);
+  digitalWrite(ledPedestre1, desligar);
+  digitalWrite(ledAmarelo1, desligar);
+  
+  delay(ledVerde);
+  
+  digitalWrite(ledVerde2, desligar);
+  digitalWrite(ledAmarelo2, ligar);
+  
+  delay(ledAmarelo);
+  
+  digitalWrite(ledVermelho2, ligar);
+  digitalWrite(ledVermelho1, desligar);
+  digitalWrite(ledAmarelo2, desligar);
+  digitalWrite(ledPedestre1, desligar);
+  digitalWrite(ledPedestre2, desligar);
+}
