@@ -1,0 +1,41 @@
+int64_t teste = '254';
+  
+  
+void setup()
+{
+	Serial.begin(9600);
+  	Serial.println("Tamanhos dos tipos de variaveis em bytes");
+  	Serial.print("bool: "); Serial.println(sizeof(bool)); // 0 ou 1
+   	Serial.print("char: "); Serial.println(sizeof(char)); // 0 a 255 cacacteres
+   	Serial.print("int: "); Serial.println(sizeof(int)); // -32768 a 32767
+   	Serial.print("unsigned int: "); Serial.println(sizeof(unsigned int)); // 0 a 65535
+   	Serial.print("long: "); Serial.println(sizeof(long)); // -2147483648 a 2147438647
+   	Serial.print("unsigned long: "); Serial.println(sizeof(unsigned long)); //0 a 4294967295
+    Serial.print("float: "); Serial.println(sizeof(float)); // -2147483648 a 2147438647  
+    //aceita virgula
+    //valor maximo positivo 3,4028235 x 10^38
+    //valor minimo positivo 1.175494 x 10^-38
+    //valor minimo negativo -1.175494 x 10^-38
+    //valor maximo negativo -3,4028235 x 10^38
+  
+    Serial.print("double: "); Serial.println(sizeof(double)); // -2147483648 a 2147438647  aceita numeros racionais
+	
+    Serial.print("int8_t: "); Serial.println (sizeof(int8_t));
+    Serial.print("int8_t: "); Serial.println (sizeof(uint8_t));
+    Serial.print("int16_t: "); Serial.println (sizeof(int16_t));
+    Serial.print("int16_t: "); Serial.println (sizeof(uint16_t));
+    Serial.print("int32_t: "); Serial.println (sizeof(int32_t));
+    Serial.print("int32_t: "); Serial.println (sizeof(uint32_t));
+    Serial.print("int64_t: "); Serial.println (sizeof(int64_t));
+    Serial.print("int64_t: "); Serial.println (sizeof(uint64_t));
+    Serial.print(sizeof(teste)); 
+    
+    
+    
+}
+
+void loop()
+{	
+  
+  
+}
