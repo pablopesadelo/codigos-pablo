@@ -1,0 +1,135 @@
+/*
+float altura = 1.95 ;
+float peso = 90 ;
+float imc = peso / sq(altura);
+
+
+void setup()
+{
+  Serial.begin(9600);
+  
+  if(imc < 18.5){
+    Serial.println("palito");
+  
+  }else if(imc <= 24.9){
+    Serial.println("deboa");
+    
+  }else if(imc <= 29.9 ){
+    Serial.println("gordinho");
+  
+  }else if(imc <= 39.9){
+    Serial.println("gordo");
+    
+  }else{
+    Serial.println("thais carla");
+  }
+}
+
+
+void loop()
+{
+
+}
+*/
+
+/*
+
+//DESAFIO1
+
+#define Ledtemperatura 13
+int temperatura = 31;
+
+void setup()
+{
+	Serial.begin(9600);
+    pinMode(Ledtemperatura, OUTPUT);
+
+  if (temperatura > 30){
+    Serial.println("alertaa");
+      digitalWrite(Ledtemperatura, HIGH); 
+  } else {
+      digitalWrite(Ledtemperatura, LOW);
+  }
+
+   
+  
+}
+
+void loop()
+{
+
+}
+
+*/
+
+/*DESAFIO2
+int bateria = 56;
+  
+void setup()
+{
+
+  Serial.begin(9600);
+
+  if (bateria >= 20 && bateria <= 80) {
+       Serial.println("alertinha");
+  }}
+
+
+void loop()
+{
+
+}
+
+*/
+
+// DESAFIO3
+
+/*
+
+#define Ledtemperatura 13
+int numeroA = 1023;
+int numeroB = 100;
+int valorConvertido = 1023;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(Ledtemperatura, OUTPUT);
+
+  valorConvertido = map(numeroA, 0, 1023, 0, 100);
+  Serial.println(valorConvertido);
+  
+  valorConvertido = constrain(valorConvertido, 20, 80);
+  digitalWrite(Ledtemperatura, HIGH);
+  Serial.print("o valor 100 excedeu o limite, valor reajustado para 80");
+}
+
+void loop()
+{
+}
+
+*/
+
+/* DESAFIO4
+
+#define Ledtemperatura 13
+int numero = 22;
+  
+void setup()
+{  
+  Serial.begin(9600);
+  pinMode(Ledtemperatura, OUTPUT);
+
+if (numero %2 == 0){
+       digitalWrite(Ledtemperatura, HIGH); 
+  } else {
+      digitalWrite(Ledtemperatura, LOW);
+  }
+  
+}
+
+void loop()
+{
+}
+
+*/
