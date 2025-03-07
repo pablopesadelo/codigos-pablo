@@ -1,0 +1,63 @@
+/*
+Autor: Pablo Pedroza
+Nome programa: Semaforo sem delay
+Descrição: Semaforo sem delay
+Data: 07/03/2005
+*/
+
+#define ligar HIGH
+#define desligar LOW
+#define ledVerde1 2
+#define ledAmarelo1 3
+#define ledVermelho1 4
+
+unsigned long tempoatual;
+unsigned long tempoinicial;
+int estado = 0;
+
+void setup()
+  
+{
+  pinMode(ledVerde1,OUTPUT); //pino2
+  pinMode(ledAmarelo1,OUTPUT); //pino3
+  pinMode(ledVermelho1,OUTPUT); //pino4
+
+  tempoinicial = millis();
+
+}  
+  
+void loop()
+{
+    tempoatual = millis();
+ 
+  switch (estado){
+    case 0:
+     digitalWrite(ledVermelho1, ligar);
+     digitalWrite(ledAmarelo1, desligar);
+    if (tempoatual - tempoinicial >= 5000) {
+      estado = 1;
+      tempoinicial = millis();
+    }
+    break;
+    
+    case 1:
+     digitalWrite(ledVermelho1, desligar);
+     digitalWrite(ledVerde1, ligar);
+    if(tempoatual - tempoinicial >= 3000){
+      estado = 2;
+        tempoinicial = millis();
+    }
+    break;
+    
+     case 2: 
+     digitalWrite(ledAmarelo1, ligar);
+     digitalWrite(ledVerde1, desligar);
+      if (tempoatual - tempoinicial >= 2000) {
+        estado = 0; 
+        tempoinicial = millis();
+      }
+      break;
+  
+  }
+}
+
