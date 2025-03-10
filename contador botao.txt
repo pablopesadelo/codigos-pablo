@@ -1,0 +1,26 @@
+#define pinBotao 10
+
+int numero = 0;
+
+void setup()
+  {
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode (pinBotao, INPUT);
+  Serial.begin(9600);
+  }
+
+
+
+void loop()
+{   
+   static bool estadoAnteriorBotao = 0;
+   bool estadoAtualBotao = digitalRead(pinBotao);
+     
+   if (estadoAtualBotao == 1 && !estadoAnteriorBotao)
+   {
+   numero++;  
+   Serial.println(numero);
+   }
+  estadoAnteriorBotao = estadoAtualBotao;
+
+} 
