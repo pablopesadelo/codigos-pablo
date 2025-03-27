@@ -1,0 +1,31 @@
+#include <Arduino.h>
+
+#define pinLed 21
+
+// PROTOTIPO DA FUNCAO
+void ligaLed (void);
+void desligaLed (void);
+
+void setup() 
+{
+  pinMode(pinLed, OUTPUT);
+}
+
+void loop() 
+{
+ ligaLed();
+ delay(300);
+ desligaLed();
+ delay(300);
+}
+
+
+void ligaLed ()
+{
+  digitalWrite(pinLed, HIGH);
+}
+
+void desligaLed ()
+{
+  digitalWrite(pinLed, LOW);
+}
