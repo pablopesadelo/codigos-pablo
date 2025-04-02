@@ -1,0 +1,65 @@
+
+#include <LiquidCrystal_I2C.h> //Install LiquidCrystal_I2C.h
+
+LiquidCrystal_I2C lcd(0x27,20,4);
+
+#define botaoMais 4
+#define botaoMenos 23
+#define ledAlerta 19
+
+void atualizarLCD (void);
+
+  int contador = 0;
+  const int LIMITE = 10;
+
+void setup() 
+{
+    pinMode(botaoMais, INPUT_PULLUP);
+    pinMode(botaoMenos, INPUT_PULLUP);
+    pinMode(ledAlerta, OUTPUT);
+
+    lcd.init();
+    lcd.backlight();
+    atualizarLCD();
+}
+
+void loop() 
+{
+  if(digitalRead(botaoMais && !botaoMenos) == HIGH)
+  {
+    contador++;
+    delay(300);
+    atualizarLCD();
+  }
+
+  if(digitalRead(botaoMenos && !botaoMais) == HIGH)
+  {
+    if(contador > 0) contador--;
+    delay(300);
+    atualizarLCD();
+  }
+
+  if (contador >= LIMITE)
+  {
+    digitalWrite(ledAlerta, HIGH);
+    delay(100);
+  }
+
+  else
+  {
+    digitalWrite(ledAlerta, LOW);
+  }
+}
+
+
+void atualizarLCD() {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Pessoas: ");
+    lcd.print(contador);
+    
+    lcd.setCursor(0, 1);
+    lcd.print("Limite: ");
+    lcd.print(LIMITE);
+}
+
