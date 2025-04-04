@@ -1,0 +1,147 @@
+#include <LiquidCrystal_I2C.h>
+#include <Arduino.h>
+
+LiquidCrystal_I2C lcd(0x27,20,4);
+
+#define canalA 18 //clk
+#define canalB 23 //dt
+#define botao 15
+#define led1 2
+#define led2 4
+#define led3 12
+#define led4 14
+
+void menuPrincipal (void);
+
+int contador = 0;
+int estadoA;
+int ultimoestadoA;
+int contadorBotao = 0;
+int brilhoLed1 = 0;
+int brilhoLed2 = 0;
+int brilhoLed3 = 0;
+int brilhoLed4 = 0;
+
+bool menu = true;
+bool modoAlteracaoLed1 = false;
+bool modoAlteracaoLed2 = false;
+bool modoAlteracaoLed3 = false;
+bool modoAlteracaoLed4 = false;
+bool botaoApertado = false;
+
+const int8_t tabelaTransicao [4][4] = {
+/*+1 = horario
+0 = parado
+-1 = antihorario
+*/
+/*      0   1   2   3 */
+/*0*/ { 0,  1, -1,  0}, 
+/*1*/ {-1,  0,  0,  1}, 
+/*2*/ { 1,  0,  0, -1}, 
+/*3*/ { 0, -1,  1,  0}
+
+/*10231023 antihorario
+32013201 horario*/
+};
+
+
+void setup() 
+{
+    Serial.begin(9600);
+    pinMode(canalA, INPUT);
+    pinMode(canalB, INPUT);
+    pinMode(botao, INPUT);
+    pinMode(led1, OUTPUT);
+    pinMode(led2, OUTPUT);
+    pinMode(led3, OUTPUT);
+    pinMode(led4, OUTPUT);
+    lcd.init();
+    lcd.backlight();
+    lcd.setCursor(0, 0);
+}
+
+void loop() 
+{
+  //controle botao
+    static bool estadoAnteriorBotao = 0;
+    bool estadoAtualBotao = digitalRead(botao);
+      
+    if (estadoAtualBotao == 1 && !estadoAnteriorBotao)
+    {
+    contadorBotao++;
+    Serial.println(contadorBotao);
+    !botaoApertado;
+    }
+   delay(30);
+   estadoAnteriorBotao = estadoAtualBotao;
+
+
+  //vendo se o botao girou, se girou, dependendo do lado, adiciona ou subtrai
+
+    bool leituraCanalA = digitalRead(canalA);
+    bool leituraCanalB = digitalRead(canalB);
+    int estadoAtualEncoder = ((leituraCanalA << 1) | leituraCanalB);
+
+    static int estadoAnteriorEncoder = 3;
+    static int posicao = 0;
+
+    posicao = posicao + tabelaTransicao[estadoAnteriorEncoder][estadoAtualEncoder];
+
+    Serial.println(posicao);
+    lcd.setCursor(0, 0);
+    lcd.print(posicao);
+
+    estadoAnteriorEncoder = estadoAtualEncoder;
+
+
+  //imprimindo resultado
+    
+    if(menu)
+      menuPrincipal();
+
+  //nao deixar o contador passar de 3 ou ser menos que 0
+
+  if((contador / 2) >= 3)
+  {
+    contador = 6;
+  }
+
+  if(1 > (contador / 2))
+  {
+    contador = 1;
+  }
+  
+  }
+
+void menuPrincipal() 
+{
+    lcd.setCursor(1, 0);
+    lcd.print("Led 1");
+    lcd.setCursor(1, 1);
+    lcd.print("Led 2");
+    lcd.setCursor(1, 2);
+    lcd.print("Led 3");
+    lcd.setCursor(1, 3);
+    lcd.print("Led 4");
+}
+
+
+
+/*
+
+if
+
+
+estadoA = digitalRead(canalA);
+  if (estadoA != ultimoestadoA)
+  {
+    if (digitalRead(canalB) != estadoA)
+    {                 
+      {
+
+      }
+        contador ++;
+        } else {
+        contador --;
+        }
+*/

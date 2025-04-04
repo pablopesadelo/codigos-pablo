@@ -1,5 +1,5 @@
 
-#include <LiquidCrystal_I2C.h> //Install LiquidCrystal_I2C.h
+#include <LiquidCrystal_I2C.h> 
 #include <ToneESP32.h>
 
 LiquidCrystal_I2C lcd(0x27,20,4);
