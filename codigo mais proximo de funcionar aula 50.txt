@@ -1,0 +1,101 @@
+#include <LiquidCrystal_I2C.h>
+#include <Arduino.h>
+
+LiquidCrystal_I2C lcd(0x27,20,4);
+
+#define canalA 23
+#define canalB 18
+#define botao 15
+#define led1 2
+#define led2 4
+#define led3 12
+#define led4 14
+
+int contador = 0;
+int estadoA;
+int ultimoestadoA;
+
+bool modoSelecao = true;
+bool modoAlteracaoLed1 = false;
+bool modoAlteracaoLed2 = false;
+bool modoAlteracaoLed3 = false;
+bool modoAlteracaoLed4 = false;
+bool botaoApertado = false;
+
+int brilhoLed1 = 0;
+int brilhoLed2 = 0;
+int brilhoLed3 = 0;
+int brilhoLed4 = 0;
+
+void setup() 
+{
+    Serial.begin(9600);
+    pinMode(canalA, INPUT);
+    pinMode(canalB, INPUT);
+    pinMode(botao, INPUT);
+    pinMode(led1, OUTPUT);
+    pinMode(led2, OUTPUT);
+    pinMode(led3, OUTPUT);
+    pinMode(led4, OUTPUT);
+    lcd.init();
+    lcd.backlight();
+    lcd.setCursor(0, 0);
+    lcd.print("Numero: ");
+    
+    ultimoestadoA = 0;
+}
+
+void loop() 
+{
+  //controle botao
+    static bool estadoAnteriorBotao = 0;
+    bool estadoAtualBotao = digitalRead(botao);
+      
+    if (estadoAtualBotao == 1 && !estadoAnteriorBotao)
+    {
+    Serial.print(estadoAtualBotao);
+    !botaoApertado;
+    }
+   delay(30);
+   estadoAnteriorBotao = estadoAtualBotao;
+
+ 
+  //vendo se o botao girou, se girou, dependendo do lado, adiciona ou subtrai
+
+  estadoA = digitalRead(canalA);
+
+  if (estadoA != ultimoestadoA){
+    if (digitalRead(canalB) != estadoA){
+        contador ++;
+        } else {
+        contador --;
+        }
+
+  //imprimindo resultado
+      lcd.setCursor(0, 0);
+      lcd.print("Selecionar Led: ");
+      lcd.setCursor(16, 0);
+      lcd.print("   ");
+      lcd.setCursor(16, 0);
+      lcd.print(contador / 2);
+
+      Serial.print("Selecionar Led: ");
+      Serial.println(contador / 2);
+     
+  }
+
+  //define o umtimo estado a como estado atual
+  ultimoestadoA = estadoA;
+
+  //nao deixar o contador passar de 3 ou ser menos que 0
+  if((contador / 2) >= 3)
+  {
+    contador = 6;
+  }
+
+  if(1 > (contador / 2))
+  {
+    contador = 1;
+  }
+  
+}
