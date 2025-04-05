@@ -1,0 +1,48 @@
+#include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
+
+#define canalA 23 //clk
+#define canalB 18 //dt
+
+const int8_t tabelaTransicao[4][4] = {
+  // 1 = horario
+  // 0 = parado
+  // -1 = antihorario
+    {0, 1, -1, 0},
+    {-1, 0, 0, 1},
+    {1, 0, 0, -1},
+    {0, -1, 1, 0}
+};
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(canalA, INPUT_PULLUP);
+    pinMode(canalB, INPUT_PULLUP);
+}
+
+void loop ()
+{
+  //faz a leitura do canal de cada estado
+  bool leituraCanalA = digitalRead(canalA);
+  bool leituraCanalB = digitalRead(canalB); 
+
+  int estadoAtualEncoder = ((leituraCanalA << 1) | leituraCanalB); //leitura do encoder
+
+  static int estadoAnteriorEncoder = 3;
+  static int contador = 0;
+  static int acumuladorMovimento = 0;
+
+  if (estadoAtualEncoder != estadoAnteriorEncoder)
+    acumuladorMovimento += tabelaTransicao[estadoAnteriorEncoder][estadoAtualEncoder];
+  
+  if (estadoAtualEncoder == 3)
+  {
+    if (acumuladorMovimento ==3)
+    contador++;
+
+    else if (acumuladorMovimento == -3)
+    contador--;
+
+    acumuladorMovimento = 0;  
+  }
+}
