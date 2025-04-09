@@ -1,0 +1,89 @@
+#include <Arduino.h>
+#include "BluetoothSerial.h"
+
+#define pinLed 2
+
+BluetoothSerial SerialBT;
+
+String palavra = "";
+String intensidade = "";
+
+void setup() 
+{
+  Serial.begin(9600);
+  SerialBT.begin("se entrar vou hackear");
+  SerialBT.println("Escolha qual led ligar:");
+  pinMode(pinLed, OUTPUT);
+
+}
+
+void loop() 
+{
+  static bool led1ligado = false;
+  static bool led2ligado = false;
+  static bool led3ligado = false;
+  static bool led4ligado = false;
+
+  static int intensidadeLed1 = 0;
+  static int intensidadeLed2 = 0;
+  static int intensidadeLed3 = 0;
+  static int intensidadeLed4 = 0;
+
+  while (SerialBT.available())
+  {
+    char caractere = SerialBT.read();
+
+    if(caractere == '\n')
+    {
+      SerialBT.println(palavra);
+
+      if(palavra.equals("led 1"))
+      {
+      }
+
+      else if(palavra.equals("led 2"))
+      {
+      }
+
+      else if(palavra.equals("led 3"))
+      {
+      }
+
+      else if(palavra.equals("led 3"))
+      {
+      }
+      else
+      {
+        SerialBT.println("Comando desconhecido");
+      }
+      palavra = "";
+    }
+
+    else if(caractere != '\r')
+    {
+      palavra += caractere;
+    }
+  }
+}
+
+
+
+
+
+    // if(caractere == 'L')
+    // {
+    //   digitalWrite(pinLed, HIGH);
+    //   Serial.println("Led Ligado");
+    // }
+
+    // else if (caractere == 'D')
+    // {
+    //   digitalWrite(pinLed, LOW);
+    //   Serial.println("Led Desligado"); 
+    // }
+
+    // else
+    // {
+    //   Serial.println("Digite apenas L ou D");
+    //   Serial.printf("Digitastes %c \n\r", caractere);
+    // }
