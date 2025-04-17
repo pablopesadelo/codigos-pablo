@@ -1,0 +1,125 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include <SparkFun_APDS9960.h>
+#include "MAX30105.h"
+#include <LiquidCrystal_I2C.h>
+#include "heartRate.h"
+
+#define APDS9960_INT = 2
+
+LiquidCrystal_I2C lcd(0x27,20,4); 
+
+SparkFun_APDS9960 apds = SparkFun_APDS9960();
+uint16_t luz_ambiente = 0;
+uint16_t luz_vermelha = 0;
+uint16_t luz_verde = 0;
+uint16_t luz_azul = 0;
+
+void controleGesto();
+void controleLuz();
+
+void setup() 
+{
+  Serial.begin(9600);
+
+  if (apds.init()) {
+    Serial.println(F("APDS-9960: Inicialização bem-sucedida"));
+  } else {
+    Serial.println(F("APDS-9960: Algo deu errado durante a inicialização"));
+  }
+
+  if (apds.enableGestureSensor(true)) {
+    Serial.println(F("O sensor de gestos está funcionando!"));
+  } else {
+    Serial.println(F("Algo deu errado durante a unidade do sensor de gestos!"));
+  }
+
+  if (apds.enableLightSensor(true)) {
+    Serial.println(F("O sensor de luz está funcionando!"));
+  } else {
+    Serial.println(F("Algo deu errado durante a unidade do sensor de luz!"));
+  }
+
+}
+
+
+void loop() 
+{
+  if(apds.enableGestureSensor(true)){
+
+    controleLuz();
+  }
+}
+
+void controleGesto() 
+{
+    if (apds.isGestureAvailable()) {
+    switch (apds.readGesture()) {
+      case DIR_UP:
+        Serial.println("CIMA");
+        break;
+      case DIR_DOWN:
+        Serial.println("BAIXO");
+        break;
+      case DIR_LEFT:
+        Serial.println("ESQUERDA");
+        break;
+      case DIR_RIGHT:
+        Serial.println("DIREITA");
+        break;
+      case DIR_NEAR:
+        Serial.println("PERTO");
+        break;
+      case DIR_FAR:
+        Serial.println("LONGE");
+        break;
+      default:
+        Serial.println("NADA");
+    }
+    delay(200);
+  }
+}
+
+void controleLuz()
+{
+  if((!apds.readAmbientLight(luz_ambiente) ||
+      !apds.readRedLight(luz_vermelha) ||
+      !apds.readGreenLight(luz_verde) ||
+      !apds.readBlueLight(luz_azul) ))
+      {
+        Serial.println("Erro na leitura de cores");
+      }
+      
+      
+      if((luz_vermelha > luz_azul) && (luz_vermelha > luz_verde) && (luz_ambiente < 1700))
+      {
+        Serial.println("VERMELHO");
+      }
+
+      if((luz_verde > luz_azul) && (luz_verde > luz_vermelha) && (luz_ambiente < 1700))
+      {
+        Serial.println("VERDE");
+      }
+
+      if((luz_azul > luz_verde) && (luz_azul > luz_vermelha) && (luz_ambiente < 1700))
+      {
+        Serial.println("AZUL");
+      }
+
+      if(luz_ambiente > 1700)
+      {
+         Serial.println("AMBIENTE");
+      }
+
+
+        Serial.print("Ambiente: ");
+        Serial.print(luz_ambiente);
+        Serial.print(" Vermelho: ");
+        Serial.print(luz_vermelha);
+        Serial.print(" Verde: ");
+        Serial.print(luz_verde);
+        Serial.print(" Azul: ");
+        Serial.println(luz_azul);     
+        
+         delay(500);
+}
