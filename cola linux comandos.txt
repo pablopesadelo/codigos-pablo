@@ -1,0 +1,56 @@
+comandos basicos
+
+cd .. = ir uma pasta acima
+ls = listar conteúdos de uma pasta
+ls -l = verificar permissões
+nano = editor de texto
+cat "nome do arquivo" = ler arquivo no terminal
+mv "localização atual" "localização nova" = mudar local de arquivo
+mkdir "nome da pasta" = criar pasta
+touch = criar arquivo
+sudo = ter poder de administrador temporariamente
+apt-get update = baixa atualizações do Linux se houver
+apt-get upgrade = instala as atualizações pegas com o apt-get update
+clear = limpar tela, apagando os comandos anteriores
+rmdir "nome da pasta" = apagar pasta vazia
+rm -r "nome da pasta" = apagar pasta com conteúdo 
+rm "nome do arquivo" = apagar arquivo
+adduser "nome do usuário" = criar usuário novo
+addgroup "nome do grupo" = criar grupo novo
+usermod -aG "nome do grupo" "nome do usuário"
+groupmod -n "nome novo de grupo" "nome antigo de grupo" = renomear grupo
+su - "nome do usuário" = entrar no perfil do usuário
+chmod --- = modificar permissões de usuário de uma pasta
+chgrp "nome do usuário" "nome da pasta" = modificar permissões de grupo de uma pasta
+-R = recursividade, fazer com que o comando afete as subpastas também
+echo "texto" = fazer com que o texto repita em todos os diretórios
+| = fazer vários comandos em apenas uma linha
+cp "original" "nome da copia" = criar uma arquivo igual a outro com outro nome
+
+
+
+coisas pra instalar em caso de emergência ou se for novo computador:
+
+sudo systemctl status "instalação"  = verificar se a instalação ocorreu bem
+sudo apt install apache2 -y = instalar apache
+sudo apt update = baixar upgrades
+sudo apt upgrade = instalar updates
+sudo ufw status = verificar estado do ufw
+sudo ufw apt list = verificar lista de coisas instaladas
+sudo ufw allow 'instalação' = permitir alguma instalação
+sudo ufw enable = ativar ufw
+
+
+caminhos:
+
+/etc/apache2/sites_available$ = local onde o default dos sites se localizam
+/etc/hosts = local dos hosts
+
+códigos:
+
+sudo a2ensite "nome do arquivo.conf" = adiciona pasta no apache
+systemctl reload apache2 = comando para digitar em seguida do anterior
+ServerName "nome do site + .local" 
+DocumentRoot /var/www/"local do site" = comando para mudar o default para um site novo
+
+sudo cp 000-default.conf site1.config
